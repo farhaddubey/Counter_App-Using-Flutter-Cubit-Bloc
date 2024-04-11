@@ -10,5 +10,12 @@ class CounterCubit extends Cubit<int> {
     emit(state+1);
     print('After: $state');
   }
+  void decrement(){
+    if(state==0){
+      return;
+    }
+    emit(state-1);
+  }
+  // The main advantage of cubit is all the functions remain within the corresponding cubit file
 
 }

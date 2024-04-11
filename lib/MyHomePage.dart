@@ -26,10 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // instantiate of CounterCubit()
     // Using that line we dont update the state. We just get one time value
 
-    return BlocBuilder<CounterCubit, int>(
-      bloc: counterCubit,
-      // Now wherener the state is updated the Entire things under build is rebuilt
-      builder: (context, counter) {
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -42,26 +39,44 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                   'You have pushed the button this many times:',
                 ),
-                Text(
-                  // '$_counter',
-                  '$counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                BlocBuilder<CounterCubit, int>(
+                  bloc: counterCubit,
+                  builder: (context, counter) {
+                    return Text(
+                      '$counter',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    );
+                  }
                 ),
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            // onPressed: _incrementCounter,
-            onPressed: (){
-              counterCubit.increment();
-              // setState(() {});
-              // If we don't want to use this setstate then We've to use the block builer mehtod
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
+          floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                // onPressed: _incrementCounter,
+                onPressed: (){
+                  counterCubit.increment();
+                  // setState(() {});
+                  // If we don't want to use this setstate then We've to use the block builer mehtod
+                },
+                tooltip: 'Increment',
+                child: const Icon(Icons.add),
+              ),
+              FloatingActionButton(
+                // onPressed: _incrementCounter,
+                onPressed: (){
+                  counterCubit.decrement();
+                  // setState(() {});
+                  // If we don't want to use this setstate then We've to use the block builer mehtod
+                },
+                tooltip: 'Decrement',
+                child: const Icon(Icons.exposure_minus_2_sharp),
+              ),
+            ],
           ), // This trailing comma makes auto-formatting nicer for build methods.
         );
-      }
-    );
+
   }
 }
